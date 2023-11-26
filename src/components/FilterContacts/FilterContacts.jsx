@@ -7,7 +7,7 @@ export const FilterContacts = () => {
 
   const handleInputChange = event => {
     const value = event.target.value;
-    dispatch(addToFilter(value.toLowerCase()));
+    dispatch(addToFilter(value));
   };
 
   return (
