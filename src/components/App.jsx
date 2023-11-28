@@ -8,13 +8,17 @@ import { fetchContacts } from 'redux/contacts/contacts.reducer';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Loader from './Loader/Loader';
-import { selectContacts, selectIsLoading } from 'redux/selectors/selectors';
+import {
+  selectIsLoading,
+  selectVisibleContacts,
+} from 'redux/selectors/selectors';
 import { LoaderWrapper } from './Loader/Loader.styled';
+import Favorite from './Favorite/Favorite';
 
 export const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
-  const contacts = useSelector(selectContacts);
+  const filteredContacts = useSelector(selectVisibleContacts);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -29,8 +33,14 @@ export const App = () => {
       </LoaderWrapper>
       <StyledDiv>
         <FilterContacts />
-        {contacts.length > 0 && <ContactsList />}
-        {contacts.length === 0 && <h3>No contacts here.</h3>}
+        {filteredContacts.some(contact => contact.isFavorite === true) && (
+          <Favorite />
+        )}
+        {filteredContacts.length > 0 ? (
+          <ContactsList />
+        ) : (
+          <h3>No contacts here.</h3>
+        )}
       </StyledDiv>
     </Wrapper>
   );

@@ -31,9 +31,12 @@ export const StyledDiv = styled.div`
   }
 
   & input {
-    width: 100%;
+    width: 370px;
     height: 25px;
-    border: 1px solid grey;
+    border: none;
     border-radius: 5px;
+    -webkit-box-shadow: inset 0px 2px 9px -4px rgba(0, 0, 0, 0.42);
+    -moz-box-shadow: inset 0px 2px 9px -4px rgba(0, 0, 0, 0.42);
+    box-shadow: inset 0px 2px 9px -4px rgba(0, 0, 0, 0.42);
   }
 `;

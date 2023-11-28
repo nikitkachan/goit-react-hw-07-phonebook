@@ -47,6 +47,38 @@ export const deleteContacts = createAsyncThunk(
   }
 );
 
+export const addToFavorite = createAsyncThunk(
+  'contacts/addToFavorite',
+  async (contact, thunkApi) => {
+    try {
+      const { data } = await axios.put(
+        `https://655f90ed879575426b4588d3.mockapi.io/contacts/${contact.id}`,
+        contact
+      );
+
+      return data;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const deleteFromFavorite = createAsyncThunk(
+  'contacts/deleteFromFavorite',
+  async (contact, thunkApi) => {
+    try {
+      const { data } = await axios.put(
+        `https://655f90ed879575426b4588d3.mockapi.io/contacts/${contact.id}`,
+        contact
+      );
+
+      return data;
+    } catch (err) {
+      return thunkApi.rejectWithValue(err.message);
+    }
+  }
+);
+
 const initialState = {
   contacts: [],
   isLoading: false,
@@ -74,11 +106,27 @@ const contactsSlice = createSlice({
           contact => contact.id !== payload.id
         );
       })
+      .addCase(addToFavorite.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== payload.id
+        );
+        state.contacts = [...state.contacts, payload];
+      })
+      .addCase(deleteFromFavorite.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== payload.id
+        );
+        state.contacts = [...state.contacts, payload];
+      })
       .addMatcher(
         isAnyOf(
           fetchContacts.pending,
           addContacts.pending,
-          deleteContacts.pending
+          deleteContacts.pending,
+          addToFavorite.pending,
+          deleteFromFavorite.pending
         ),
         state => {
           state.isLoading = true;
@@ -89,7 +137,9 @@ const contactsSlice = createSlice({
         isAnyOf(
           fetchContacts.rejected,
           addContacts.rejected,
-          deleteContacts.rejected
+          deleteContacts.rejected,
+          addToFavorite.rejected,
+          deleteFromFavorite.rejected
         ),
         (state, { payload }) => {
           state.isLoading = false;

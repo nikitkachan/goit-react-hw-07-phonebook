@@ -18,6 +18,21 @@ export const StyledUl = styled.ul`
   p {
     margin: 0;
   }
+  & button {
+    padding: 0;
+    border: none;
+
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  .buttonsWrapper {
+    display: flex;
+    gap: 10px;
+  }
+  .favoriteBtn {
+    cursor: pointer;
+  }
 `;
 export const Button = styled.button`
   height: 30px;

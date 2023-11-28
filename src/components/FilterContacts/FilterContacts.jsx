@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { Input } from './FilterContacts.styled';
 import { addToFilter } from 'redux/filter/filter.reducer';
 
 export const FilterContacts = () => {
@@ -13,7 +12,7 @@ export const FilterContacts = () => {
   return (
     <div>
       <h3>Find contacts by name</h3>
-      <Input
+      <input
         id="name"
         type="text"
         name="name"
